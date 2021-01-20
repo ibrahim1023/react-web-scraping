@@ -5,8 +5,6 @@ const path = require('path');
 const { MongoClient } = require('mongodb');
 var { PythonShell } = require('python-shell');
 
-const test = '';
-
 require('dotenv').config();
 
 const app = express();
