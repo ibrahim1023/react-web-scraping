@@ -75,12 +75,18 @@ if (
 }
 
 app.listen(PORT, async () => {
-  MongoClient.connect(process.env.MONGO_URI, function (err, client) {
-    if (err) {
-      console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
+  MongoClient.connect(
+    'mongodb+srv://admin:adminPass@cluster0.c7kwz.mongodb.net/test?retryWrites=true&w=majority',
+    function (err, client) {
+      if (err) {
+        console.log(
+          'Error occurred while connecting to MongoDB Atlas...\n',
+          err
+        );
+      }
+      console.log('Connected...');
+      console.log(`Server running on port ${PORT}..`);
+      collection = client.db('test').collection(collectionName);
     }
-    console.log('Connected...');
-    console.log(`Server running on port ${PORT}..`);
-    collection = client.db('test').collection(collectionName);
-  });
+  );
 });
