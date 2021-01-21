@@ -65,10 +65,12 @@ const HomePage = () => {
           </Button>
         </InputGroup>
         {loading && <Loader />}
-        {showResults &&
-          results.map((result) => (
-            <ProductDetails result={result} key={result.link} />
-          ))}
+        {
+          showResults && <ProductDetails results={results} />
+          // results.map((result) => (
+          //   <ProductDetails result={result} key={result.link} />
+          // ))
+        }
         {emptyResults && (
           <h1 style={{ textAlign: 'center', marginTop: 50 }}>
             No Results found

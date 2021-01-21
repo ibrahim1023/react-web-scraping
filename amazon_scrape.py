@@ -57,16 +57,23 @@ def get_price(soup):
             "span", attrs={'id': 'priceblock_ourprice'}).string.strip()
 
     except AttributeError:
-
-        try:
-            # If there is some deal price
-            price = soup.find(
-                "span", attrs={'id': 'priceblock_dealprice'}).string.strip()
-
-        except:
-            price = ""
+        price = ""
 
     return price
+
+    # Function to extract Product Price
+
+
+def get_original_price(soup):
+
+    try:
+        original_price = soup.find(
+            "span", attrs={'class': 'priceBlockStrikePriceString'}).string.strip()
+
+    except AttributeError:
+        original_price = ""
+
+    return original_price
 
 
 # Function to extract Product Rating
@@ -153,6 +160,7 @@ def amazon_scrape(keyword, HEADERS):
         # all_images = get_image(new_soup, title)
         rating = get_rating(new_soup)
         price = get_price(new_soup)
+        original_price = get_original_price(new_soup)
 
         if (price != ""):
             data = {}
@@ -161,11 +169,17 @@ def amazon_scrape(keyword, HEADERS):
             data['rating'] = rating
             data['link'] = url
 
+            if (original_price != ""):
+                data['original_price'] = float(original_price[1:])
+            else:
+                data['original_price'] = ""
+
             data_list.append(data)
 
             # print("Product Title =", title)
             # # print("Product Image =", get_image(new_soup, title))
             # print("Product Price = $", price)
+            # print("Product Price [Original]= $", get_original_price(new_soup))
             # print("Product Rating =", get_rating(new_soup))
             # print("Number of Product Reviews =", get_review_count(new_soup))
             # print("Availability =", get_availability(new_soup))
